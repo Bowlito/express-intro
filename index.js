@@ -4,21 +4,37 @@ import 'dotenv/config'
 
 const app = express()
 
-app.get('/', (req, res) => {
+const m1 = (req, res, next) => {
+    console.log("Middleware : m1");
+    next()
+    
+}
+
+const m2 = (req, res, next) => {
+    console.log("Middleware : m2");
+    next()
+}
+
+const m3 = (req, res, next) => {
+    console.log("Middleware : m3");
+    next()
+}
+
+app.get('/', (req, res, next) => {
+    console.log("GET : /")
     res.end("GET : /")
+    next()
 })
 
-app.post('/', (req, res) => {
-    res.end("POST : /")
-})
 
-app.get('/personne', (req, res) => {
-    res.end("GET : /personne")
-})
 
-app.get('/formation', (req, res) => {
-    res.end("GET : /formation")
-})
+app.use([m1,m3,m2])
+
+//app.use(m1)
+
+//app.use(m2)
+
+
 
 const PORT = process.env.PORT || 5000
 
